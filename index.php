@@ -1,13 +1,42 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ДЗ1</title>
-</head>
-<body>
-    <h1>Выберите действие</h1>
-   <a href="/action/auth/auth.php">Авторизация</a></br>
-   <a href="/action/registr/registr.php">Регистрация</a>
-</body>
-</html>
+<?php
+include './functions.php';
+
+$array = [ 
+    [
+    'id' => 1,  'name' => 'Задача 1', 'parent_id' => null,
+    ],
+    [
+        'id' => 2,  'name' => 'Задача 2', 'parent_id' => null,
+    ],
+    [
+        'id' => 3,  'name' => 'Задача 3',  'parent_id' => null,
+    ],
+    [
+        'id' => 4,  'name' => 'Подзадача 1.1',  'parent_id' => 1,
+    ],
+    [
+        'id' => 5,  'name' => 'Подзадача 1.2', 'parent_id' => 1,
+    ],
+    [
+        'id' => 6,  'name' => 'Подзадача 1.3',  'parent_id' => 1,
+    ],
+    [
+        'id' => 7,   'name' => 'Подзадача 2.2', 'parent_id' => 2,
+    ],
+    [
+        'id' => 8,  'name' => 'Подзадача 2.3',  'parent_id' => 2,
+    ],
+    [
+        'id' => 9, 'name' => 'Подзадача 3.1', 'parent_id' => 3,
+    ],
+    [
+        'id' => 10, 'name' => 'Подзадача 1.1.1',  'parent_id' => 4,
+    ]
+];
+$hierarchy = [];
+$result=recursion($array,$hierarchy);
+foreach ($result as $res) {
+    echo $res['name']."<br>";
+}
+
+?>
