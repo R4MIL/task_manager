@@ -1,104 +1,129 @@
 <?php
 
-abstract class DBConnection
+interface DBInterface
 {
-    static protected $database;
+    function setDatabase($value);
+    function setTable($value);
 
-    public function __construct($database) {
-        $this->database = $database;
+    function get();
+    function insert();
+    function update();
+    function delete();
+}
+
+abstract class DBConnection implements DBInterface
+{
+    protected string $database;
+    protected string $table;
+
+    public function setDatabase($value): DBInterface
+    {
+        $this->database = $value;
+        return $this;
     }
 
-    public function connect() {
-        echo "Подключение к БД - ". $this->database .'<br>';
+    public function setTable($value): DBInterface
+    {
+        $this->table = $value;
+        return $this;
     }
-    abstract public function get();
-    abstract public function save();
-    abstract public function delete();
+
+    public function get(): bool {
+        echo "Запрашиваем базу ".$this->database." из таблицы ".$this->table.'<br><br>';
+        return true;
+    }
+
+    public function insert(): bool {
+        echo "Добавляем в базу ".$this->database." в таблицу ".$this->table.'<br><br>'; 
+        return true;
+    }
+
+    public function update(): bool {
+        echo "Обвновляем базу ".$this->database." таблицу ".$this->table.'<br><br>'; 
+        return true;
+    }
+
+    public function delete(): bool {
+        echo "Удаляем из базы ".$this->database." из таблицы ".$this->table.'<br><br>';
+        return true; 
+    }
 }
 
 class User extends DBConnection
 {
-    public $name;
+    private array $data;
 
-    public function __construct($database,$name) {
-        parent::__construct($database);
-        $this->name = $name;
+    public function __construct($data) {
+        $this->data = $data;
     }
 
-    public function get() {
-        $this->connect();
-        echo "Запрашиваем из таблицы Users".'<br>';
+    public function get(): bool
+    {
+        echo "Выборка данных: "."<br>";
+        echo $this->data['name'];
+        echo "<br>";
+        return parent::get();
     }
 
-    public function save() {
-        $this->connect();
-        echo "Записываем в таблицу Users".'<br>';    
-    }
-
-    public function delete() {
-    }
-
-    public function infoUser() {
-        $this->get();
-        echo "Результат: Пользователь: ".$this->name.'<br><br>';    
-    }
-
-    public function addUser() {
-        $this->save();
-        echo "Результат: Добавлен пользователь".'<br><br>';
+    public function insert(): bool
+    {
+        echo "Добавление данных:" . "<br>";
+        print_r($this->data);
+        echo "<br>";
+        return parent::insert();
     }
 }
 
 class Task extends DBConnection
 {
-    private $name;
+    private array $data;
     private User $owner;
-    private $deadline;
 
-    public function __construct($database, $name, User $owner, $deadline) {
-        parent::__construct($database);
-        $this->name = $name;
+    public function __construct($data, User $owner) {
+        $this->data = $data;
         $this->owner = $owner;
-        $this->deadline = $deadline;
     }
 
-    public function __destruct() {
-        $this->delete();
-        echo "Результат: Задача удалена".'<br><br>';
+    public function updateTask($data, User $owner) {
+        $this->data = $data;
+        $this->owner = $owner;
+        $this->update();
     }
 
-    public function get() {
-        $this->connect();
-        echo "Запрашиваем из таблицы Tasks".'<br>';
-    }
-
-    public function save() {
-        $this->connect();
-        echo "Записываем в таблицу Tasks".'<br>';    
-    }
-
-    public function delete() {
-        $this->connect();
-        echo "Удаляем из таблицы Tasks".'<br>';    
-    }
-
-    public function infoTask()
+    public function get(): bool
     {
-        $this->get();
-        echo "Название '".$this->name."', ответственный: ".$this->owner->name.", срок до ".$this->deadline.'<br><br>';  
+        echo "Выборка данных: "."<br>";
+        echo $this->data['name'];
+        echo "<br>";
+        return parent::get();
     }
 
-    public function createTask() {
-        $this->save();
-        echo "Результат: Задача создана".'<br><br>';
+    public function insert(): bool
+    {
+        echo "Добавление данных:" . "<br>";
+        print_r($this->data);
+        echo "<br>";
+        print_r($this->owner);
+        echo "<br>";
+        return parent::insert();
     }
 
-    public function updateTask(User $owner, $deadline) {
-        $this->save();
-        $this->owner = $owner;
-        $this->deadline = $deadline;
+    public function update(): bool
+    {
+        echo "Обновление данных:" . "<br>";
+        print_r($this->data);
+        echo "<br>";
+        print_r($this->owner);
+        echo "<br>";
+        return parent::update();
+    }
 
-        echo "Результат: Задача изменена".'<br><br>';
+    public function delete(): bool
+    {
+        echo "Удаление данных:" . "<br>";
+        echo $this->data['name'];
+        echo "<br>";
+        return parent::delete();
     }
 }
 
