@@ -1,0 +1,41 @@
+--create database task_manager_db;
+
+-- --Пользователи
+--create table users (
+--	id serial primary key,
+--	name varchar(255) not null,
+--	email varchar(255) null
+--);
+--
+-- --Статусы
+--create table statuses (
+--	id serial primary key,
+--	name varchar(255) not null
+--);
+--
+-- --Задачи
+--create table tasks (
+--	id serial primary key,
+--	name varchar(255) not null,
+--	description varchar(255) not null,
+--	deadline date not null,
+--	status_id int references statuses (id),
+--	owner_id int references users (id)
+--);
+
+-- --Вставка данных
+--insert into users(name,email) values 
+--('Том','tom@mail.ru'),
+--('Билли','billy@mail.ru'),
+--('Джерри','jerry@mail.ru');
+--
+--insert into statuses(name) values 
+--('Новый'),
+--('В работе'),
+--('Завершено'),
+--('Отклонено');
+--
+--insert into tasks(name,description,deadline,status_id,owner_id) values 
+--('Задача 1','Описание задачи 1','2025-01-23',1,1),
+--('Задача 2','Описание задачи 2','2025-02-12',2,3),
+--('Задача 3','Описание задачи 3','2025-03-07',3,2);
