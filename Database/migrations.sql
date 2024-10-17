@@ -39,3 +39,19 @@
 --('Задача 1','Описание задачи 1','2025-01-23',1,1),
 --('Задача 2','Описание задачи 2','2025-02-12',2,3),
 --('Задача 3','Описание задачи 3','2025-03-07',3,2);
+
+-- --Добавляем столбцы в users
+--alter table users add login varchar(255) null
+--alter table users add password varchar(255) null
+
+--update users
+--set login = 'tom', "password" = 'tom1'
+--where name = 'Том'
+--
+--update users
+--set login = 'billy', "password" = 'billy2'
+--where name = 'Билли'
+--
+--update users
+--set login = 'jerry', "password" = 'jerry3'
+--where name = 'Джерри'
