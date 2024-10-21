@@ -7,28 +7,44 @@ use task_manager\Views\View;
 
 class UserController 
 {
-    public function index() {
-        View::render('users/auth');
+    public function auth() {
+        View::render('users/authentication');
     }
 
-    public function auth($login,$password) {
-        $userFind = User::get($login,$password);
+    public function authentication($login,$password) {
+        $userFind = User::auth($login,$password);
         if ($userFind) {
-            $result = $userFind['name'] . ', вы успешно вошли!';
+            header('Location: /users/list');
         } else {
             $result = 'Вход не удался!';    
+            View::render('users/error', ['result' => $result]);
         }
-        View::render('users/result', ['result' => $result]);
     }
 
     public function reg() {
-        View::render('users/reg');
+        View::render('users/registration');
     }
 
-    public function registr($name,$email,$login,$password) {
-        User::save($name,$email,$login,$password);
-        View::render('users/auth');
+    public function registration($name,$email,$login,$password) {
+        User::create([
+            'name' => $name,
+            'email' =>  $email,
+            'login' => $login,
+            'password' =>  $password
+        ]);
+        View::render('users/authentication');
     }
+
+    public function usersList() {
+        $users = User::all();
+        View::render('users/list', ['users' => $users]);     
+    }
+
+    public function userGet($id) {
+        $user = User::find($id);
+        View::render('users/data', ['user' => $user]);     
+    }
+    
 
 
 }
