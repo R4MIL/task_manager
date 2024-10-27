@@ -25,7 +25,7 @@ Route::prefix('users')->group(function () {
 });
 
 Route::prefix('tasks')->group(function () {
-    Route::get('/add/{owner_id}', [TaskController::class,'add'])->name('tasks.add');
+    Route::get('/add/{user_id}', [TaskController::class,'add'])->name('tasks.add');
     Route::post('/create', [TaskController::class,'create'])->name('tasks.create');
     Route::get('/edit/{task}', [TaskController::class,'edit'])->name('tasks.edit');
     Route::post('/update/{task}', [TaskController::class,'update'])->name('tasks.update');

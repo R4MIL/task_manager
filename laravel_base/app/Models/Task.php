@@ -15,6 +15,6 @@ class Task extends Model
         'name',
         'description',
         'deadline',
-        'owner_id'
+        'user_id'
     ];
 }

@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function add(int $owner_id) {
-        return view('tasks.add',['owner_id' => $owner_id]);
+    public function add(int $user_id) {
+        return view('tasks.add',['user_id' => $user_id]);
     }
 
     public function create(Request $request) {
@@ -19,7 +19,7 @@ class TaskController extends Controller
         ]);
 
         Task::create($request->all());
-        return redirect()->route('users.show', $request->owner_id);
+        return redirect()->route('users.show', $request->user_id);
     }
 
     public function edit(Task $task) {
@@ -34,11 +34,11 @@ class TaskController extends Controller
         ]);
 
         $task->update($request->all());
-        return redirect()->route('users.show', $task->owner_id);
+        return redirect()->route('users.show', $task->user_id);
     }
 
     public function delete(Task $task) {
         $task->delete();
-        return redirect()->route('users.show', $task->owner_id);
+        return redirect()->route('users.show', $task->user_id);
     }
 }
