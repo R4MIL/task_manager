@@ -3,6 +3,7 @@
 namespace task_manager\Controllers;
 
 use task_manager\Models\User;
+use task_manager\Mapping\User\UserMapper;
 use task_manager\Views\View;
 
 class UserController 
@@ -12,7 +13,9 @@ class UserController
     }
 
     public function auth($login,$password) {
-        $userFind = User::get($login,$password);
+        $userMappper = new UserMapper();
+        $user = new User($login,$password);
+        $userFind = $userMappper->get($user);
         if ($userFind) {
             $result = $userFind['name'] . ', вы успешно вошли!';
         } else {
@@ -26,7 +29,9 @@ class UserController
     }
 
     public function registr($name,$email,$login,$password) {
-        User::save($name,$email,$login,$password);
+        $userMappper = new UserMapper();
+        $user = new User($login,$password,$name,$email);
+        $userMappper->save($user);
         View::render('users/auth');
     }
 
