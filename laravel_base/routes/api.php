@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\ImageController;
 use App\Http\Controllers\API\TaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,13 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('/create', [TaskController::class, 'create']);
             Route::post('/update', [TaskController::class, 'update']);
             Route::post('/delete', [TaskController::class, 'delete']);
+            Route::prefix('image')->group(function() {
+                Route::post('/upload', [ImageController::class, 'upload']);
+                Route::post('/remove', [ImageController::class, 'remove']);
+                Route::post('/rename', [ImageController::class, 'rename']);
+                Route::get('/preview', [ImageController::class, 'preview']);
+                Route::get('/download', [ImageController::class, 'download']);
+            });
         });
 
     });
